@@ -71,4 +71,59 @@ The `START`-Routine is where things go together. The second statement calls the 
 
 ## LED Shifter (Assembler-Version)
 
+Due to missing time during the lesson we had to complete this project alone at home.  
+It was the target to subsequently turn on all pins on one port according to the following image.
+![](LED-Shifter.png)
+
+### 1. Initialize for the LED-Shifter
+
+The code necessarry for this application is nearly the same as that used in the Hello, World application.
+
+```assembler
+Initialize    
+    movlw   0b00000000
+    movwf   TRISB
+    movlw   0b00000001
+    movwf   PORTB
+    return
+```
+
+In this case we need to use the whole bunch of pins provided by port b. As we need all to be outputs we load a byte with all bits set to 0 first into the accumulator and from there into the control register for trisistor b. Now that we have all pins in the correct mode we begin by loading the first correct state into the data register of port b. The first state is represented by the byte `0b00000001` as the LSB represents the first pin of the port.
+
+### 2. StepUp & StepDown
+
+`StepUp` and `StepDown` are two methods that move the active led one step to the left or to the right respectively. Both methods utilize a modified version of the `Delay900` method described earlier. As they are pretty similar I will show how they work with `StepUp` as an example.
+
+```assembler
+StepUp 
+    rlncf    PORTB,1    ;   StepDown uses rrncf respectively
+    call     Delay500
+    return
+```
+
+Allthough this method looks pretty simple it introduced the first problems. It was a hint to use `rlf` as I tried to use that statement over `rlncf` I got compiler error but had problems understanding them. After countless useless answers in many forum threads I found out, that `rlf` is called `rlcf` in the instruction set used by the `PIC18F4520` microcontroller we are targeting here.
+But as I had replaced the calls I noticed that on the one hand the LEDs will turn on subsequently as they should but on the other hand they didn't turn off as they should. I figured out, that the reason for that was the carrying behaviour of that instruction. I found another called `rlncf` which does the job pretty god as it doesnt care if whether an overflow happens.
+
+### 3. Configuration
+
+Another problem I encountered was that some pins were initilized as analog rather than digita outputs. For some reason I wasn't able to see outputs on those pins. The solution was it to change the configuration with
+
+```assembler
+CONFIG  PBADEN = OFF
+```
+
+### 4. Shift the LEDs
+
+As a first approach I went with a rather primitive solution to the problem as I took the boilerplate code from the first application, implemented the methods described above and added 14 method calls like so
+
+```assembler
+START
+    call    Initialize
+    Loop		    
+    call    StepUp      ;   repeat six times
+    call    StepDown    ;   repeat six times
+    GOTO    Loop
+```
+
+
 ## Hello, World (C-Version)

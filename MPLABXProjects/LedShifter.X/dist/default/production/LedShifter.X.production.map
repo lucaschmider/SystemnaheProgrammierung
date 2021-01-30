@@ -1,0 +1,51 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Feb 02 13:15:31 2021
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                 RES_VECT       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000004    program   0x000002
+                MAIN_PROG       code   0x000006    program   0x000056
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00005b      
+            92 out of 33048 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 Delay900   0x000042    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+          DelayHalfSecond   0x00002a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                   DelayW   0x00002c    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+               Initialize   0x000020    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                     Loop   0x00000a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                    START   0x000006    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                 StepDown   0x00001a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                   StepUp   0x000014    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                    dlyw0   0x000030    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                    dlyw1   0x00002e    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    START   0x000006    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                     Loop   0x00000a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                   StepUp   0x000014    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                 StepDown   0x00001a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+               Initialize   0x000020    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+          DelayHalfSecond   0x00002a    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                   DelayW   0x00002c    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                    dlyw1   0x00002e    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                    dlyw0   0x000030    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+                 Delay900   0x000042    program     static C:\Users\lucas\MPLABXProjects\LedShifter.X\LedShifter.asm
+
+

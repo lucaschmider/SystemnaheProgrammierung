@@ -69,4 +69,42 @@ shiftLeft = (shiftLeft == 1 && LATB != 0b10000000)
 ```
 ## Button-Reader (C-Version)
 
+This time we should implement some code that acts just like some light switches we have at home. So every time the signal encounters a falling edge, the state of an led should toggle. 
+I started by defining some aliases because we now have a lot of symbols which sound almost the same. We do that in the `Definitions.h` file where we also defined our settings and the clockspeed for our delay functions.
+
+```c
+#define Button PORTBbits.RB0
+#define ButtonMode TRISBbits.RB0
+#define LED LATBbits.LATB1
+#define LEDMode TRISBbits.RB1
+```
+
+You can see, that we use different registers for the input `Button` (`PORTB` with its struct `PORTBbits` for easier access to just a single bit) and the output `LED` (`LATB` with `LATBbits` respectively).  
+After doing that I thought, that it would be pretty straightforward to implement the desired behaviour.
+```c
+void main(void) {
+    ButtonMode = 1;
+    LEDMode = 0;
+    LATB = 0;
+    volatile char previousState = 0;
+    while(1) {
+        if (Button == 0 && previousState != Button) {
+            LED = !LED;
+            __delay_ms(20);
+        }
+        previousState = Button;
+    }
+    
+    return;
+}
+```
+
+I started as always by setting the modes of my pins and clearing the whole port alongside with defining the variable `previousState` to hold the state of `Button` in the iteration that was executed last. This variable is necessary as otherwise the led would toggle every iteration if the `Button` state is LOW.
+In the Loop I simply check whether `Button` is currently LOW and also has changed since the last check has occured. If that has happened, I toggle the `LED` state and wait `20ms` in order to debounce the button a bit.  
+That solution sometimes worked and sometimes not. I guess that is because the state of `Button` could change during the execution of one iteration.
+I fixed the issue by introducing a local constant as follows.
+```c
+const char currentState = Button;
+```
+I then replaced all references to `Button` with ones to `currentState`.
 ## Debugging with Stimulus

@@ -125,5 +125,36 @@ START
     GOTO    Loop
 ```
 
+The next was to reduce steps by using logic to determine the direction of the animation. I tried to solve the problem with the following (not working) snippet (I introduced two new help registers `Logic_Temp1` and `Logic_Temp2`). 
+
+```assembler
+btfss   ShiftLeft,0	    ; if ShiftLeft[0] == 0 {
+call    StepUp	        ;   StepUp();
+                        ; }
+
+btfsc   ShiftLeft,0	    ; if ShiftLeft[0] == 1 {
+call    StepDown        ;   StepDown();
+                        ; }
+
+movlw   0b00000001
+btfsc   LATB,7	        ; W = LATB[7] == 1 ? 0b00000001 : 0b00000000
+movlw   0b00000000
+andwf   ShiftLeft,0	    ; W = (shiftLeft == 1 && LATB != 0b10000000)
+movwf   Logic_Temp1	    ; Logic_Temp1 = (shiftLeft == 1 && LATB != 0b10000000)
+
+movlw   0b00000001
+btfss   LATB,0	        ; W = LATB[0] == 1 ? 0b00000001 : 0b00000000
+movlw   0b00000000
+movwf   Logic_Temp2
+comf    ShiftLeft,0	    ; W = !ShiftLeft
+andwf   Logic_Temp2,1   ; Logic_Temp2 = (shiftLeft == 0 && LATB != 0b00000001)
+
+movf    Logic_Temp1
+iorwf   Logic_Temp2,0   ; W = (shiftLeft == 1 && LATB != 0b10000000) || (shiftLeft == 0 && LATB != 0b00000001)
+movwf   ShiftLeft    
+```
+
+As I think, that the concept itself should work and there are just some minor bugs like swapped literals, the amount of code should not change anymore. But what we also can see is that for the basic solution we need 14 calls (and as we also call them in the second aproach their cost can be simplified to 1). The second however takes 18 calls and is very hard to understand. For that reason I will stick to the first approach as it is (at least in my opinion) a greater value to be able to understand the code you wrote.
 
 ## Hello, World (C-Version)
+

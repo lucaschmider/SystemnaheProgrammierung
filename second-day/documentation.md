@@ -28,7 +28,7 @@ void delayHalfSecond(void) {
 }
 ```
 
-As you can see, in the first two lines of code, we start by initializing the pins. Again, `TRISB` is responsible for the direction of the pins where a `0` means output mode and `1` means input mode. As every bit stands for one pin of the port we net to set it to `0`, for clarity I always use the binary representation (`0b00000000`) ab it would be also possible to use decimal or other representations like `0x00`. On the other hand `LATB` is resposible for the value of the pins. That is where the bit literal representation really shines with `0b00000001` I can directly see that there is a HIGH at the first pin and a LOW on all others, thats not the case with decimal (`1`) or octal (`0x01`) representation. But I also have to say, that this type of literal is not standard C syntax, you have to have a compiler that knows how to interpret this syntax (which XC8 does).
+As you can see, in the first two lines of code, we start by initializing the pins. Again, `TRISB` is responsible for the direction of the pins where a `0` means output mode and `1` means input mode. As every bit stands for one pin of the port we net to set it to `0`, for clarity I always use the binary representation (`0b00000000`) ab it would be also possible to use decimal or other representations like `0x00`. On the other hand `LATB` is resposible for the value of the pins. That is where the bit literal representation really shines. Using `0b00000001` I can directly see that there is a HIGH at the first pin and a LOW on all others, thats not the case with decimal (`1`) or octal (`0x01`) representation. But I also have to say, that this type of literal is not standard C syntax, you have to have a compiler that knows how to interpret this syntax (which XC8 does).
 
 ### Improving the code
 
@@ -108,3 +108,10 @@ const char currentState = Button;
 ```
 I then replaced all references to `Button` with ones to `currentState`.
 ## Debugging with Stimulus
+
+While the "I/O Pins" view was sufficient when we debugged code that does not react to changes from outside we need to level up in order to debug for example the `ButtonReader` project.  
+If we hit *Window* > *Simulator* > *Stimulus* we enter a view similar to the following.
+
+![](stimulus.png)
+
+Using the tab "Asynchronous" we can define and trigger events that then reflect changes to the microcontrols I/O.

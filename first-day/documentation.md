@@ -158,4 +158,29 @@ As I think, that the concept itself should work and there are just some minor bu
 
 ## Hello, World (C-Version)
 
-> ToDo: Write chapter
+As a first project in C we had to clone the "Hello, World" we did in assembler. Allthough that is relatively simple to program, I had some problems getting even an empty `main` to compile. The problem was, that MPLABX couldn't find a file called `xc.h`. After a lot of time I figured out, that I had to update the projects settings to include some folders. From now I was able to implement the project myself. We discussed how to use a configuration generator to generate some code in order to configure the microcontroller in a propper way. The results were placed in a header file called `definitions.h`.
+To make my code more readable I defined two aliases for the value of the first pin on port b and the corresponding trisistor. As I figured our later we also needed to define the frequency of the used crystal for the delay methods to work.
+
+```c
+#define _XTAL_FREQ 4000000
+#define LED LATBbits.LATB0
+#define LEDMode TRISBbits.RB0
+```
+
+With the aliases beeing set I was able to set the pin mode and state quite simple just by allocating a 0 to `LEDMode`.
+
+```c
+void main(void) {
+    LEDMode = 0;
+    LED = 0;
+    while(1) {
+        LED = 1;
+        __delay_ms(100);
+        LED = 0;
+        __delay_ms(900);
+    }
+    return;
+}
+```
+
+I used the I/O Pins view in order to check my results.

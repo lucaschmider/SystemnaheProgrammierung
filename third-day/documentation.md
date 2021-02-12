@@ -40,7 +40,23 @@ Starting with the first line we define that we wan't to start with a led that is
 The second (and seventh respectively) need a bit more explanation. I think, that the timers of our microcontroler are counters rather than timers. The counter has a set amount of bits it can use. When an overflow occurs, the timer (or counter) is perceived to have triggered. And as the time the counter increases depends on the used crystal, that cannot be controlled via code, we have to set the value of `TMR1` so that the overflow occurs earlier.  
 In the while loop we check for an overflow with the `TimerOverflowed` alias for the corresponding bit `PIR1bits.TMR1IF`. If thats the case we need reset both the overflow flag and the timers (counter) value. After that re can finally toggle the led.
 
-
 ### Interrupt
 
+If we wanted to combine the ButtonReader from yesterday with the timer above (using seperate LEDs) it could happen that the performance (or better the responsiveness) of either project suffers. The best thing we could do is to use interrupts for both the button and the timer, but for the current project we will just use interrupts for the timer.  
+The configuration we need for this is quite simmilar to the one we needed while using polling. In fact we configure the timer just the same way and need to add the following to enable the interrupt trigger.
+
+```c
+INTCONbits.GIE  = 1;
+INTCONbits.PEIE = 1;
+PIE1bits.TMR1IE = 1;
+```
+
+With these lines we enable the Timer1 Interrupt in three stages:
+
+1. Enable interrupts at all
+2. Enable that interrupts from peripheral devices are forwarded
+3. Enable the interrupt source for timer 1
+
+In order to 
+```c
 ### Clock Simulator

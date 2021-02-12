@@ -167,7 +167,7 @@ To make my code more readable I defined two aliases for the value of the first p
 #define LEDMode TRISBbits.RB0
 ```
 
-With the aliases beeing set I was able to set the pin mode and state quite simple just by allocating a 0 to `LEDMode`.
+With the aliases beeing set I was able to set the pin mode and state quite simple just by allocating a 0 to `LEDMode` and `LED`.
 
 ```c
 void main(void) {
@@ -183,4 +183,4 @@ void main(void) {
 }
 ```
 
-I used the I/O Pins view in order to check my results.
+I used the I/O Pins view in order to check my results and saw that the pin was blinking just as expected, allthough I'm not quite sure whether the timing is correct nor if it is even consistently wrong.

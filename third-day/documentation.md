@@ -111,3 +111,73 @@ Once I started the simulation, I immediately noticed that blinking using a timer
 The projects above require an external crystal clock. So if we want to simulate them, we need to also simulate the crystal. MPLAB X provides a tool called stimulus for that matter. By opening the `Clock Stimulus` panel, we can add a new crystal by specifying the pin the crystal is attached to alongside with some other parameters that define how the crystal operates.
 
 ![](clock-stimulus.png)
+
+## Analog to digital converter
+
+The goal of this project is it to read an analogue signal from one port of the microcontroller and control the duty cycle of another pins pwm output. Allthough that sounds quite useless as you could simply connect a potentiometer to the load (in this case a led), that would be very inefficient especcialy for higher loads.  
+Our input pin will be `AN0`, which shares its lead with `RA0` and our output pin will be `CCP1` via the same lead as `RC2`. For that matter we begin by defining the pin modes as we always did at de beginning of the `main()` routine.
+
+```c
+TRISAbits.RA0 = 1;
+TRISCbits.RC2 = 0;
+```
+
+The next step is to configure the analogue to digital converter module through the following lines.
+
+```c
+ADCON0bits.CHS = 0b0000;
+ADCON0bits.GO  = 0;
+ADCON0bits.ADON = 1;
+ADCON1bits.VCFG = 0b00;
+ADCON1bits.PCFG = 0b1110;
+ADCON2bits.ADFM = 1;
+ADCON2bits.ACQT = 0b010;
+ADCON2bits.ADCS = 0b100;
+```
+
+Our microcontroller is able to handle an analogue input on 13 different channels (`AN0` to `AN12`) as the datasheet advises us, the nibble `0b0000` represents `AN0` and has to be written to the third to sixth bits of `ADCON0`. In the code above we use the reference `ADCON0bits.CHS` which addresses exactly those bits.  
+In order to start a conversion, we need to set `GO` bit of `ADCON0` to `1`, but as we haven't configured the module completely, we set it to low, just in case.  
+As the next step we configure the reference voltage to use for our conversion. We choose `Vss` (ground) over `AN2` for the negative reference and `Vcc` over `AN3` for the positive reference. According to the datasheet we have to set `ADCON1bits.VCFG` to `0b00` in order to achieve this. If we set one of those bits we would instruct the microcontroller to use the external reference voltage. The first bit in this literal controls the negative, the second the positive reference. We don't need external references as we don't need the very high accuracy we would gain.  
+It is possible, that only certain pins on `PORTA` are used as analogue pins. To control this behaviour, the datasheet contains a table showing us that we need to set `ADCON1bits.PCFG` to `0b1110` if we wanted all pins except `AN0` to be digital.  
+In the next step we need to solve a small problem: our microcontroller has a ten bit ADC build into it. One register is able to hold eight bit. To solve that, we use two registers. What we have now is six bits of free space and the choice between aligning the actually used bits to the left or to the right side. We do that as we set `ADCON2bits.ADFM` which results in an alignment called "right justified".  
+Unfortunally, the conversion does not happen instantly. We have to wait a certain amount of time. And depending on the speed of our crystal, we have to set `ADCON2bits.ADCS` accordingly. In our case we go for four cycles. The same goes for the data acquisition.  
+From now on we are (theoretically) able to read the analogue signal on `AN0`. In order to display the value, we need to configure `TIMER2` aswell.
+
+
+```c
+T2CONbits.T2CKPS  = 0b01;   // Prescale Select bits (Prescaler is 1:4)
+T2CONbits.T2OUTPS = 0b0000; // Output Postscale Select bits (Postscale is 1:1)
+T2CONbits.TMR2ON  = 1;      // Start Timer 2
+PR2 = 99;                   // see above
+```
+
+We have the option to work with both pre- and postscalers to influence the timers speed. A postscaler is pretty much the same as a prescaler but is applied on the output signal instead of the input signal, both have the ability to devide an input frequency. As we use a 1:4 prescaler in this project, I will explain prescalers by the one we use. You can imagine one as a two bit counter with overflow detection. Each time the input signal occurs the counter is increased by one. In the moment the counter tries to count up to the four an overflow occurs which resets the timer and gives an output signal. So we have effectively divided our input frequency by four.  
+To enable the prescaler we need to set `T2CONbits.T2CKPS` to one of the values mentioned in the datasheet - `0b01` enables the desired 1:4 prescaler. Due to the fact that we don't want a postscaler we set `T2CONbits.T2OUTPS` to `0b0000` which will use a 1:1 postscaler, effectively disabling it.  
+Now that the timer is configured properly, we can activate it by setting `T2CONbits.TMR2ON`.  
+As a last step we have to set `PR2` to 99. To be honest, I don't understand why.
+
+Now that we have configured both the adc and timer 2, we can enable pwm mode for `CCP1` as a last step with just a single line of code.
+
+```c
+CCP1CONbits.CCP1M = 0b1100;
+```
+
+The remaining programm is quite simple and follows these steps in an endless loop.
+
+1. Start the conversion
+2. Wait until it is finished
+3. Adjust the duty cycle
+
+```c
+while(1){    
+    ADCON0bits.GO = 1;
+    while(!ADCON0bits.GO);
+
+    CCPR1L = ADRES / 16;
+    CCP1CONbits.DC1B = 0b00;
+}
+```
+
+The first line accomplishes the first step. By setting the `GO` bit, we instruct the adc to start converting.  
+The adc clears the `GO` bit once its done, so we wait for this to happen in the second line.  
+Now the result is written into `ADRES` and we assign it to the duty cycle control register `CCPR1L`. Here we have the same problem as earlier with the ten bit value we need to store using eight bit registers. We overcome that by dividing through sixteen and simply setting the last two bits (stored in `CCP1CONbits.DC1B`) to zero.

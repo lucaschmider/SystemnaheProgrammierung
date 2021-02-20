@@ -145,16 +145,16 @@ From now on we are (theoretically) able to read the analogue signal on `AN0`. In
 
 
 ```c
-T2CONbits.T2CKPS  = 0b01;   // Prescale Select bits (Prescaler is 1:4)
-T2CONbits.T2OUTPS = 0b0000; // Output Postscale Select bits (Postscale is 1:1)
-T2CONbits.TMR2ON  = 1;      // Start Timer 2
-PR2 = 99;                   // see above
+T2CONbits.T2CKPS  = 0b01;
+T2CONbits.T2OUTPS = 0b0000;
+T2CONbits.TMR2ON  = 1;
+PR2 = 99;
 ```
 
 We have the option to work with both pre- and postscalers to influence the timers speed. A postscaler is pretty much the same as a prescaler but is applied on the output signal instead of the input signal, both have the ability to devide an input frequency. As we use a 1:4 prescaler in this project, I will explain prescalers by the one we use. You can imagine one as a two bit counter with overflow detection. Each time the input signal occurs the counter is increased by one. In the moment the counter tries to count up to the four an overflow occurs which resets the timer and gives an output signal. So we have effectively divided our input frequency by four.  
 To enable the prescaler we need to set `T2CONbits.T2CKPS` to one of the values mentioned in the datasheet - `0b01` enables the desired 1:4 prescaler. Due to the fact that we don't want a postscaler we set `T2CONbits.T2OUTPS` to `0b0000` which will use a 1:1 postscaler, effectively disabling it.  
 Now that the timer is configured properly, we can activate it by setting `T2CONbits.TMR2ON`.  
-As a last step we have to set `PR2` to 99. To be honest, I don't understand why.
+As a last step we have to set `PR2` to 99. That is responsible for defining how long one pmw period is (that is the sum of the time the pin is on and the time the pin is off). The datasheet gives us the equation `PWM Period = (PR2 + 1) * 4 * Tosc * Presc2` with `Tosc` beeing the period of the used oscillator (in our case with a 16Mhz chrystal: 62.5ns) and `Presc2` beeing the value of our prescaler. With those values we can calculate the pmw period ourselves to `PWM Period = (99 + 1) * 4 * 62.5ns * 4 = 100us`.
 
 Now that we have configured both the adc and timer 2, we can enable pwm mode for `CCP1` as a last step with just a single line of code.
 
@@ -181,3 +181,29 @@ while(1){
 The first line accomplishes the first step. By setting the `GO` bit, we instruct the adc to start converting.  
 The adc clears the `GO` bit once its done, so we wait for this to happen in the second line.  
 Now the result is written into `ADRES` and we assign it to the duty cycle control register `CCPR1L`. Here we have the same problem as earlier with the ten bit value we need to store using eight bit registers. We overcome that by dividing through sixteen and simply setting the last two bits (stored in `CCP1CONbits.DC1B`) to zero.
+
+## Pulse width modulation
+
+As the pwm project is pretty much the same as the previous project with the reading functionality cut out, I won't explain it in the same depth. The Code is the following:
+
+```c
+void main(void) {
+
+    // Configuration as explained previously
+    TRISCbits.RC2 = 0;
+    T2CONbits.T2CKPS  = 0b01;
+    T2CONbits.T2OUTPS = 0b0000;
+    T2CONbits.TMR2ON  = 1;
+    PR2 = 99;
+    CCP1CONbits.CCP1M = 0b1100;
+
+    // Relevant code
+    CCPR1L = 0b00101000;        // Line A
+    CCP1CONbits.DC1B = 0b00;    // Line B
+
+    while(1);
+    return;
+}
+```
+
+I've marked the only two relevant lines (A & B). They are responsible for defining the desired duty cycle. The eight MSBs of the ten bit duty cycle value are stored in the register `CCPR1L` and the two remaining bits in `CCP1CONbits.DC1B`. So in other words, our programm sets the duty cycle of `CCP1` (=`RC2`) to `0b0010100000` (for further reference: **CCP**) and then goes into an endless loop to hold this duty cycle. If we convert **CCP** into its decimal representation, we get 160. The datasheet says us, that the duty cycle is calculated according to the following formula `DutyCycle = CCP * Tosc * Presc2` with `Tosc` beeing the oscillatior period of `62.5ns` and `Presc2` beeing the value of the prescaler from timer to (in our case 4). As a result we get `DutyCycle = 160 * 62.5ns * 4 = 40us`. As the period of one pwm cycle is `100us` our duty cycle equals 40%. 

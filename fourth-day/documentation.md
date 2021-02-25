@@ -60,3 +60,12 @@ MPLAB X also allows us to evaluate the memory used by a certain program. The cor
 
 To see how the memory consumption scales, I took the discussed program (here the tests with 1 Set) and duplicated the code while renaming the variables so that we have two or three sets with three variables each. I thought, that there may be some sort of a benefit if there are already other variables as if the compiler needed to include certain libraries for either of the types. As all of the bars increase in a linear way and the delta is much smaller than the difference to another datatypes graph, this consideration seems to be true.  
 However we can see, that using `float`s means a significantly larger amount of program and data memory needed.
+
+### Trigonometry
+
+I also did some tests using the trigonometric functions provided by `math.h`. I assumed, that there is a correlation betwen the parameter and the trigonometric functions value. To be clear I assumed, that `time(sin(0))` is about the same as `time(sin(π))` as they both have integer solutions and `time(sin(1))` to be significantly higher as the solution is floating point. The same should be true for `cos` and `tan` (of course with their respective values). I also assume, that the calculation of `tan` will alway take longer than both `sin` and `cos` as it is composed out of the others.
+
+![](Trigonometry.png)
+
+We can see, that the execution time differs by parameter value but there is no correlation to the solution the trigonometric function delivers.  
+However the composition is clearly visible, as the `tan` bar is not only always the largest but also about the size of the other bars sticked to each other.

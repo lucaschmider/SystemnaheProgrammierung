@@ -1,7 +1,5 @@
 # Fourth Day
 
-## Serial Communication
-
 ## Performance analysis
 
 ### Floating-Point division

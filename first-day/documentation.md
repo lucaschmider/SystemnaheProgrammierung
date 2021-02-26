@@ -25,8 +25,6 @@ To cover this application I will firstly go through all the sub routines that ar
 
 ### 1. DelayW
 
-> ToDo: explain how DelayW works
-
 The `DelayW` subroutine delays the further execution of the code by a specified amount of milliseconds. To specify that time we have to use two statements:
 
 ```assembler
@@ -34,12 +32,14 @@ movlw	    D'100'      ;   move the amount of milliseconds to the accumulator
 call	    DelayW      ;   call DelayW to wait the specified time
 ```
 
+`DelayW` will then use a register and counts that down to zero which delays the execution by the in `W` stored amount of cycles.
+
 ### 2. Delay900
 
 As we target a microcontroller that is not capable of handling values greater than `255` we need a workaround for the 900ms duration in which the LED should be turned of. We simply call the `DelayW`-Subroutine for four times and always set duration to `255` which totals to a delay $255ms \bullet 4 = 1020ms$. 
 
 ### 3. Initialize for Hello, World
-> ToDo: Wozu bsf & bcf?
+
 ```assembler
 Initialize
     bsf	    STATUS,RP0

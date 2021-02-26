@@ -80,7 +80,7 @@ The `START`-Routine is where things go together. The second statement calls the 
 
 Due to missing time during the lesson we had to complete this project alone at home.  
 It was the target to subsequently turn on all pins on one port according to the following image.
-![](first-day/LED-Shifter.png)
+![&nbsp;](first-day/LED-Shifter.png){ width=40% }
 
 #### 1. Initialize for the LED-Shifter
 

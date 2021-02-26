@@ -1,0 +1,6 @@
+# Conclusion
+
+The most noticeable thing I learnt was how important a datasheet is when doing this sort of low level programming. In the beginning I never touched it and had a very hard time unterstanding the calculations and registers that went around. This was especially painful when I tried the timer projects. When I looked into the datasheet suddenly all made sende.  
+I also learnt during the assembler version of the led shifter how complicated it can be to write logic on the lowest level possible (at least as I can imagine).  
+But assembler was something very interesting. I even bought a raspberry pi pico and some WS2812B led stripes and plan to control them via their PIO statemachines which are programmed in an assembler language, allthough I am currently fighting with the example code in order to even understand how the leds want their data. But that is a different topic.  
+All in all the lessons were interesting but often it was a bit hard to understand everything and it required a lot of time after the lectures.

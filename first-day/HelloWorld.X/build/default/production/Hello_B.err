@@ -1,0 +1,4 @@
+Warning[207] C:\USERS\LUCAS\MPLABXPROJECTS\HELLOWORLD.X\HELLO_B.ASM 13 : Found label after column 1. (Loop)
+Warning[202] C:\USERS\LUCAS\MPLABXPROJECTS\HELLOWORLD.X\HELLO_B.ASM 17 : Argument out of range.  Least significant bits used.
+Message[302] C:\USERS\LUCAS\MPLABXPROJECTS\HELLOWORLD.X\HELLO_B.ASM 24 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] C:\USERS\LUCAS\MPLABXPROJECTS\HELLOWORLD.X\HELLO_B.ASM 40 : Found directive in column 1. (END)

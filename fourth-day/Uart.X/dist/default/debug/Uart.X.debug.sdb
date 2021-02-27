@@ -1,0 +1,198 @@
+[p GLOBOPT AUTOSTATIC LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F4520 ]
+[d frameptr 4065 ]
+"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"19 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"10 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 3 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 3 0 ]
+"11 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 3 0 ]
+"8 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 3 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul64.c
+[v ___omul __omul `(ul  1 e 4 0 ]
+"12 C:\Users\lucas\MPLABXProjects\Uart.X\main.c
+[v _main main `(v  1 e 1 0 ]
+"11 C:\Users\lucas\MPLABXProjects\Uart.X\UART.c
+[v _InitializeUart InitializeUart `(uc  1 e 1 0 ]
+"39
+[v _WriteToUart WriteToUart `(v  1 e 1 0 ]
+"50
+[v _WriteTextToUart WriteTextToUart `(v  1 e 1 0 ]
+"60
+[v _IsUartDataReady IsUartDataReady `(uc  1 e 1 0 ]
+"66
+[v _ReadUartData ReadUartData `(uc  1 e 1 0 ]
+"1313 C:/Program Files (x86)/Microchip/xc8/v2.10/pic/include\pic18f4520.h
+[v _LATD LATD `VEuc  1 e 1 @3980 ]
+[s S210 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 TRISC3 1 0 :1:3 
+`uc 1 TRISC4 1 0 :1:4 
+`uc 1 TRISC5 1 0 :1:5 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"1953
+[s S219 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+[u S228 . 1 `S210 1 . 1 0 `S219 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES228  1 e 1 @3988 ]
+[s S42 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+"2693
+[s S51 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IF 1 0 :1:4 
+`uc 1 RC1IF 1 0 :1:5 
+]
+[u S55 . 1 `S42 1 . 1 0 `S51 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES55  1 e 1 @3998 ]
+[s S155 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"3151
+[s S164 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 ADEN 1 0 :1:3 
+]
+[s S167 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[s S170 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC8_9 1 0 :1:6 
+]
+[s S173 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC9 1 0 :1:6 
+]
+[s S176 . 1 `uc 1 RCD8 1 0 :1:0 
+]
+[u S178 . 1 `S155 1 . 1 0 `S164 1 . 1 0 `S167 1 . 1 0 `S170 1 . 1 0 `S173 1 . 1 0 `S176 1 . 1 0 ]
+[v _RCSTAbits RCSTAbits `VES178  1 e 1 @4011 ]
+[s S103 . 1 `uc 1 TX9D 1 0 :1:0 
+`uc 1 TRMT 1 0 :1:1 
+`uc 1 BRGH 1 0 :1:2 
+`uc 1 SENDB 1 0 :1:3 
+`uc 1 SYNC 1 0 :1:4 
+`uc 1 TXEN 1 0 :1:5 
+`uc 1 TX9 1 0 :1:6 
+`uc 1 CSRC 1 0 :1:7 
+]
+"3359
+[s S112 . 1 `uc 1 TX9D1 1 0 :1:0 
+`uc 1 TRMT1 1 0 :1:1 
+`uc 1 BRGH1 1 0 :1:2 
+`uc 1 SENDB1 1 0 :1:3 
+`uc 1 SYNC1 1 0 :1:4 
+`uc 1 TXEN1 1 0 :1:5 
+`uc 1 TX91 1 0 :1:6 
+`uc 1 CSRC1 1 0 :1:7 
+]
+[s S121 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 TX8_9 1 0 :1:6 
+]
+[s S124 . 1 `uc 1 TXD8 1 0 :1:0 
+]
+[u S126 . 1 `S103 1 . 1 0 `S112 1 . 1 0 `S121 1 . 1 0 `S124 1 . 1 0 ]
+[v _TXSTAbits TXSTAbits `VES126  1 e 1 @4012 ]
+"3576
+[v _TXREG TXREG `VEuc  1 e 1 @4013 ]
+"3588
+[v _RCREG RCREG `VEuc  1 e 1 @4014 ]
+"3600
+[v _SPBRG SPBRG `VEuc  1 e 1 @4015 ]
+"8668
+[v _TRMT TRMT `VEb  1 e 0 @32097 ]
+"12 C:\Users\lucas\MPLABXProjects\Uart.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"14
+[v main@received_char received_char `VEuc  1 a 1 30 ]
+"13
+[v main@initilizationResult initilizationResult `Cuc  1 a 1 29 ]
+"30
+} 0
+"50 C:\Users\lucas\MPLABXProjects\Uart.X\UART.c
+[v _WriteTextToUart WriteTextToUart `(v  1 e 1 0 ]
+{
+"51
+[v WriteTextToUart@i i `i  1 a 2 3 ]
+"50
+[v WriteTextToUart@text text `*.31uc  1 p 1 1 ]
+"54
+} 0
+"39
+[v _WriteToUart WriteToUart `(v  1 e 1 0 ]
+{
+[v WriteToUart@data data `uc  1 a 1 wreg ]
+[v WriteToUart@data data `uc  1 a 1 wreg ]
+[v WriteToUart@data data `uc  1 a 1 0 ]
+"42
+} 0
+"66
+[v _ReadUartData ReadUartData `(uc  1 e 1 0 ]
+{
+"69
+} 0
+"60
+[v _IsUartDataReady IsUartDataReady `(uc  1 e 1 0 ]
+{
+"62
+} 0
+"11
+[v _InitializeUart InitializeUart `(uc  1 e 1 0 ]
+{
+"12
+[v InitializeUart@x x `ui  1 a 2 26 ]
+"11
+[v InitializeUart@baudRate baudRate `Cl  1 p 4 14 ]
+"35
+} 0
+"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+{
+"10
+[v ___aldiv@quotient quotient `l  1 a 4 10 ]
+"11
+[v ___aldiv@sign sign `uc  1 a 1 9 ]
+[v ___aldiv@counter counter `uc  1 a 1 8 ]
+"7
+[v ___aldiv@dividend dividend `l  1 p 4 0 ]
+[v ___aldiv@divisor divisor `l  1 p 4 4 ]
+"41
+} 0

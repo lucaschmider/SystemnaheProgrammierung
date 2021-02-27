@@ -1,6 +1,6 @@
 # Third Day
 
-## Timer 
+## Timer
 
 Our target was it toggle a led each time a timer elapses. This timer should be set to elapse every second. Timers on our targeted microcontroller could either be used by polling or by using an interrupt.
 
